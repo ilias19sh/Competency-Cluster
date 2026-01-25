@@ -1,0 +1,3 @@
+npx biome check .
+
+#TODO: add npm test after setting up tests

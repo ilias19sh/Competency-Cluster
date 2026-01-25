@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+#Windows utilise CRLF
+#Git préfère LF
+
+#Cette configuration évite les problèmes de fin de ligne entre les différents systèmes d'exploitation
+#Ça force tout le projet en LF
+
+#https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+#https://stackoverflow.com/questions/287871/what-are-the-crlf-and-lf
