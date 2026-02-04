@@ -10,41 +10,32 @@ on:
 jobs:
   sonarcloud:
     name: SonarCloud Scan
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest] # seulement Windows et Mac
+    # CHANGE ICI : Utilise ubuntu-latest pour le scan
+    runs-on: ubuntu-latest 
 
     steps:
-      # 1️ Checkout repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Update à v4 tant qu'à faire
         with:
           fetch-depth: 0
 
-      # 2️ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️ Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4️ Run tests & generate coverage
       - name: Run tests and generate coverage
-        run: |
-          npm run test -- --coverage || exit 0
-        shell: bash  # compatible Mac et Windows (GitHub Actions bash shell)
+        run: npm run test -- --coverage || exit 0
 
-      # 5️ Run SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           projectBaseDir: .
-          organization: "Competency-Cluster"
-          projectKey: "competency-cluster_competency-cluster"
-          projectName: "Competency-Cluster"
+          # Optionnel : si ces infos sont dans sonar-project.properties, 
+          # tu peux les enlever d'ici pour éviter les warnings.
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Obligatoire pour SonarCloud
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
