@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # La Base de Données
+  database:
+    image: postgres:15-alpine
+    container_name: cda-db
+    restart: always
+    environment:
+      POSTGRES_USER: user_cda
+      POSTGRES_PASSWORD: password_cda
+      POSTGRES_DB: db_cda
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  # Le Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cda-back
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgres://user_cda:password_cda@database:5432/db_cda
+    depends_on:
+      - database
+
+  # Le Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cda-front
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
