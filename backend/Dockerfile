@@ -15,5 +15,5 @@ COPY --from=builder /backend/dist ./dist
 # On installe uniquement les dépendances de prod (pas de TS, etc.)
 RUN npm install --omit=dev
 
-EXPOSE 3001
+EXPOSE 8080
 CMD ["node", "dist/index.js"]
