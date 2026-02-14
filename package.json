@@ -8,7 +8,7 @@
 		"dev:backend": "npm --prefix backend run start:dev",
 		"dev:frontend": "wait-on http://localhost:3000 && npm --prefix frontend run dev",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky; fi",
+		"prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install || true; fi",
 		"lint": "npx @biomejs/biome check .",
 		"lint:fix": "npx @biomejs/biome check --write ."
 	},
