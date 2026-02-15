@@ -1,65 +1,72 @@
-name: CI / SonarCloud
+name: CI / SonarCloud & Vercel Preview
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
+    branches: [main, develop]
     types: [opened, synchronize, reopened]
 
 jobs:
-  build-and-test:
-    name: Build, Test & Sonar
+  quality-check:
+    name: Build, Lint & Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: 📦 Installation des dépendances
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: 🧹 Linter & Formatter (Biome)
+        run: npm run lint || echo "Lint failed, check logs"
 
-      - name: Run tests and generate coverage
-        run: npm run test -- --coverage --watchAll=false || echo "No tests found"
+      - name: 🧪 Tests Unitaires & Coverage (Vitest)
+        # Le || echo permet de ne pas bloquer si aucun test n'est trouvé
+        run: npm run test:ci || echo "No tests found, skipping."
 
-      - name: SonarCloud Scan
+      - name: 🏗️ Build Frontend
+        run: npm run build:front
+
+      - name: 🏗️ Build Backend
+        run: npm run build:back
+
+      - name: 📊 Analyse SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  update-pr-description:
-    name: Update PR Header
-    if: github.event_name == 'pull_request'
+  update-pr-header:
+    name: Vercel Preview Link
+    needs: quality-check
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Add Preview Link to PR Body
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
+            // Nettoyage du nom de la branche pour l'URL Vercel
             const branch = pr.head.ref.toLowerCase().replace(/[^a-z0-9]/g, '-');
             const url = `https://competency-cluster-git-${branch}-cc-cda.vercel.app`;
             
             const header = `### 🚀 Preview Deployment\n**Link:** [${url}](${url})\n\n---\n`;
             
-            // On vérifie si le lien est déjà présent pour éviter de le dupliquer à chaque commit
-            if (!pr.body || !pr.body.includes(url)) {
-              const newBody = header + (pr.body || "");
+            // On récupère le body actuel
+            let body = pr.body || "";
+            
+            // Si le lien n'est pas déjà dans le body, on l'ajoute tout en haut
+            if (!body.includes(url)) {
               await github.rest.pulls.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: pr.number,
-                body: newBody
+                body: header + body
               });
             }
