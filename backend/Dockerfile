@@ -1,5 +1,5 @@
-# 1. Phase de BUILD
-FROM node:20-alpine AS builder
+# 1. Phase de BUILD (linux/amd64 pour Apple Silicon)
+FROM --platform=linux/amd64 node:20-alpine AS builder
 WORKDIR /backend
 COPY package*.json ./
 # On copie aussi le dossier prisma pour la génération du client
@@ -11,7 +11,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # 2. Phase de RUN
-FROM node:20-alpine
+FROM --platform=linux/amd64 node:20-alpine
 WORKDIR /backend
 
 # On a besoin du moteur Prisma (Query Engine) en prod
@@ -25,4 +25,4 @@ RUN npm install --omit=dev
 
 EXPOSE 3001
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/main.js"]
