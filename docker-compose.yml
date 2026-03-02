@@ -1,17 +1,18 @@
-version: '3.8'
+
 
 services:
-  # La Base de Données
+  # La Base de Données (postgres:15 Debian pour compatibilité Mac ARM)
   database:
-    image: postgres:15-alpine
+    image: postgres:15
+    platform: linux/arm64
     container_name: cda-db
     restart: always
     environment:
-      POSTGRES_USER: user_cda
-      POSTGRES_PASSWORD: password_cda
-      POSTGRES_DB: db_cda
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
 
@@ -25,7 +26,8 @@ services:
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgres://user_cda:password_cda@database:5432/db_cda
+      PORT: 3001
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@database:5432/${DB_NAME}?schema=public
     depends_on:
       - database
 
@@ -37,7 +39,7 @@ services:
     container_name: cda-front
     restart: always
     ports:
-      - "3000:3000"
+      - "3000:8080"
     depends_on:
       - backend
 
