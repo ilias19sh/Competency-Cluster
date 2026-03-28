@@ -7,7 +7,7 @@ COPY prisma ./prisma/
 RUN npm install
 COPY . .
 # Génère le client Prisma (indispensable avant le build TS)
-RUN npx prisma generate
+RUN NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma generate
 RUN npm run build
 
 # 2. Phase de RUN
