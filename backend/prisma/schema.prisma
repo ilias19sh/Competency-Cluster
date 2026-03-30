@@ -1,0 +1,234 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- CORE MODELS ---
+
+model School {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(150)
+  city     String    @db.VarChar(255)
+  zip_code String    @db.VarChar(10)
+  address  String    @db.VarChar(255)
+  domain   String    @db.VarChar(255)
+  users    User[]
+  programs Program[]
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  email             String   @unique @db.VarChar(320)
+  first_name        String   @db.VarChar(100)
+  last_name         String   @db.VarChar(100)
+  phone             String   @db.VarChar(100)
+  password          String   @db.VarChar(255)
+  registration_date DateTime @default(now())
+  
+  school_id         Int
+  school            School   @relation(fields: [school_id], references: [id])
+
+  // Héritage / Relations Spécialisées
+  admin             Admin?
+  teacher           Teacher?
+  student           Student?
+}
+
+model Admin {
+  id           Int     @id // Partage l'ID de User
+  user         User    @relation(fields: [id], references: [id])
+  isSuperAdmin Boolean @default(false)
+  status       String  @db.VarChar(150)
+  goals        Goal[]
+}
+
+model Teacher {
+  id           Int            @id // Partage l'ID de User
+  user         User           @relation(fields: [id], references: [id])
+  status       String         @db.VarChar(150)
+  goals        Goal[]
+  notifications Notification[]
+  modules      Module[]
+}
+
+model Student {
+  id              Int              @id // Partage l'ID de User
+  user            User             @relation(fields: [id], references: [id])
+  status          String           @db.VarChar(150)
+  points          Int              @default(0)
+  
+  promo_id        Int
+  promo           Promo            @relation(fields: [promo_id], references: [id])
+  
+  achievements    Achievement[]
+  attempts        Attempt[]
+  ranking_history RankingHistory[]
+}
+
+// --- ACADEMIC STRUCTURE ---
+
+model Program {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(150)
+  domain       String   @db.VarChar(150)
+  creation_date DateTime @default(now())
+  
+  school_id    Int
+  school       School   @relation(fields: [school_id], references: [id])
+  promos       Promo[]
+}
+
+model Promo {
+  id           Int       @id @default(autoincrement())
+  title        String    @db.VarChar(150)
+  study_year   String    @db.VarChar(50)
+  creation_date DateTime  @default(now())
+  
+  program_id   Int
+  program      Program   @relation(fields: [program_id], references: [id])
+  students     Student[]
+  goals        Goal[]
+}
+
+// --- EDUCATIONAL CONTENT ---
+
+model Module {
+  id            Int         @id @default(autoincrement())
+  title         String      @db.VarChar(150)
+  sub_title     String      @db.VarChar(255)
+  description   String      @db.Text
+  creation_date DateTime    @default(now())
+  
+  teacher_id    Int
+  teacher       Teacher     @relation(fields: [teacher_id], references: [id])
+  submodules    Submodule[]
+  taggings      Tagging[]
+}
+
+model Submodule {
+  id            Int        @id @default(autoincrement())
+  title         String     @db.VarChar(150)
+  description   String     @db.Text
+  creation_date DateTime   @default(now())
+  
+  module_id     Int
+  module        Module     @relation(fields: [module_id], references: [id])
+  questions     Question[]
+  bonus         Bonus[]
+  attempts      Attempt[]
+}
+
+model Question {
+  id           Int       @id @default(autoincrement())
+  value        String    @db.Text
+  level        String    @db.VarChar(100)
+  
+  submodule_id Int
+  submodule    Submodule @relation(fields: [submodule_id], references: [id])
+  answers      Answer[]
+}
+
+model Answer {
+  id           Int      @id @default(autoincrement())
+  value        String   @db.Text
+  isGoodAnswer Boolean  @default(false)
+  
+  question_id  Int
+  question     Question @relation(fields: [question_id], references: [id])
+}
+
+// --- GAMIFICATION & PROGRESSION ---
+
+model Goal {
+  id            Int      @id @default(autoincrement())
+  description   String   @db.Text
+  points        Int
+  creation_date DateTime @default(now())
+  
+  admin_id      Int
+  admin         Admin    @relation(fields: [admin_id], references: [id])
+  teacher_id    Int
+  teacher       Teacher  @relation(fields: [teacher_id], references: [id])
+  promo_id      Int
+  promo         Promo    @relation(fields: [promo_id], references: [id])
+}
+
+model Achievement {
+  id            Int      @id @default(autoincrement())
+  creation_date DateTime @default(now())
+  
+  student_id    Int
+  student       Student  @relation(fields: [student_id], references: [id])
+  badge_id      Int      // En supposant qu'une table Badge pourrait exister ou c'est un ID externe
+}
+
+model Attempt {
+  id           Int       @id @default(autoincrement())
+  score        Int
+  creation_date DateTime @default(now())
+  
+  student_id   Int
+  student      Student   @relation(fields: [student_id], references: [id])
+  submodule_id Int
+  submodule    Submodule @relation(fields: [submodule_id], references: [id])
+}
+
+model Bonus {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(150)
+  points       Int       @default(0)
+  
+  submodule_id Int
+  submodule    Submodule @relation(fields: [submodule_id], references: [id])
+}
+
+model RankingHistory {
+  id           Int      @id @default(autoincrement())
+  ranking_id   Int      // Référence à une possible table Ranking
+  current_position Int
+  phrase       String   @db.Text
+  type         String   @db.VarChar(150)
+  
+  student_id   Int
+  student      Student  @relation(fields: [student_id], references: [id])
+}
+
+// --- UTILITIES ---
+
+model Notification {
+  id            Int      @id @default(autoincrement())
+  content       String   @db.Text
+  creation_date DateTime @default(now())
+  
+  teacher_id    Int
+  teacher       Teacher  @relation(fields: [teacher_id], references: [id])
+}
+
+model Tag {
+  id       Int       @id @default(autoincrement())
+  title    String    @db.VarChar(150)
+  taggings Tagging[]
+}
+
+model Tagging {
+  id        Int    @id @default(autoincrement())
+  module_id Int
+  module    Module @relation(fields: [module_id], references: [id])
+  tag_id    Int
+  tag       Tag    @relation(fields: [tag_id], references: [id])
+}
+
+model Setting {
+  id            Int      @id @default(autoincrement())
+  creation_date DateTime @default(now())
+  type          String   @db.VarChar(150)
+}
