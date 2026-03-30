@@ -1,1 +1,1 @@
-export * from "./database/prisma.service"
+export * from "../../prisma.service"
