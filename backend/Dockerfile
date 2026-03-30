@@ -25,4 +25,4 @@ RUN npm install --omit=dev
 
 EXPOSE 3001
 
-CMD ["node", "dist/main.js"]
+CMD [npm run start:prod]
