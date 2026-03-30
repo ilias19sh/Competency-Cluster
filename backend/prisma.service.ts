@@ -4,16 +4,19 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor() {
-    super();
+    super({
+      datasourceUrl: process.env.DATABASE_URL,
+    } as any);
   }
 
   async onModuleInit() {
     try {
-      await this.$connect();
-      console.log('✅ CONNEXION BDD RÉUSSIE (V7)');
-    } catch (err) {
-      console.error('❌ ERREUR PRISMA V7 AU DÉMARRAGE :');
-      console.error(err.message);
+      this.$connect()
+        .then(() => console.log('✅ BDD Connectée'))
+        .catch((e) => console.error('❌ Erreur de connexion différée:', e.message));
+        
+    } catch (error) {
+      console.error('❌ Erreur fatale initialisation Prisma:', error.message);
     }
   }
 
