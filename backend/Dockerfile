@@ -16,4 +16,4 @@ COPY --from=builder /backend/dist ./dist
 RUN npm install --omit=dev
 
 EXPOSE 8080
-CMD ["node", "dist/index.js"]
+CMD [npm run start:prod]
