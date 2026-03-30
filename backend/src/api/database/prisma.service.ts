@@ -7,7 +7,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     super();
   }
 
-  async onModuleInit() {
-    await this.$connect();
-  }
+async onModuleInit() {
+  this.$connect()
+    .then(() => console.log('Connexion BDD OK ✅'))
+    .catch((err) => console.error('Erreur BDD : ', err));
+}
 }
