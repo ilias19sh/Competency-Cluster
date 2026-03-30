@@ -23,6 +23,6 @@ COPY --from=builder /backend/dist ./dist
 # On installe les dépendances de prod
 RUN npm install --omit=dev
 
-EXPOSE 3001
+EXPOSE 8080
 
 CMD [npm run start:prod]
