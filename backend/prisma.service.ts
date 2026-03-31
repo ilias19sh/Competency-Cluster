@@ -14,6 +14,8 @@ export class PrismaService
     super({
       log: ['error', 'warn'],
     });
+
+  console.log('✅ PrismaService constructor');
   }
 
   async onModuleInit() {
