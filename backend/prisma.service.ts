@@ -3,18 +3,14 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-  constructor() {
-    super({
-      datasource: {
-        url: process.env.DATABASE_URL,
-      },
-    } as any);
-  }
-
+  
   async onModuleInit() {
-    this.$connect()
-      .then(() => console.log('✅ PRISMA V7 CONNECTÉ'))
-      .catch((err) => console.error('❌ PRISMA V7 ERROR:', err.message));
+    try {
+      await this.$connect();
+      console.log('✅ PRISMA CONNECTÉ');
+    } catch (err) {
+      console.error('❌ PRISMA CONNECTION ERROR:', err.message);
+    }
   }
 
   async onModuleDestroy() {
