@@ -3,7 +3,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/mon-backend-image', '.']
 
-  # 2. Push de l'image sur Google Container Registry
+  # 2. Push de l'image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/mon-backend-image']
 
@@ -21,10 +21,11 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-      # C'est cette ligne qui permet à Prisma de "voir" la base de données :
       - '--set-cloudsql-instances'
       - 'project-f676239d-0023-40fd-a9c:europe-west9:cc-bdd'
-      - '--update-env-vars'- 'DATABASE_URL=DATABASE_URL:latest'
+      # Correction ici : bien séparer le flag du secret avec un espace
+      - '--set-secrets'
+      - 'DATABASE_URL=DATABASE_URL:latest'
 
 images:
   - 'gcr.io/$PROJECT_ID/mon-backend-image'
