@@ -23,9 +23,12 @@ steps:
       - '--allow-unauthenticated'
       - '--set-cloudsql-instances'
       - 'project-f676239d-0023-40fd-a9c:europe-west9:cc-bdd'
-      # Correction ici : bien séparer le flag du secret avec un espace
       - '--set-secrets'
       - 'DATABASE_URL=DATABASE_URL:latest'
 
 images:
   - 'gcr.io/$PROJECT_ID/mon-backend-image'
+
+# Cette section règle ton erreur de "logs_bucket"
+options:
+  logging: CLOUD_LOGGING_ONLY
