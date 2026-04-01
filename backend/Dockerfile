@@ -34,4 +34,5 @@ COPY --from=builder /backend/node_modules ./node_modules
 
 EXPOSE 8080
 
+# On utilise la variable PORT de GCP
 CMD ["node", "dist/main.js"]
