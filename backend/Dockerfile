@@ -9,6 +9,7 @@ RUN npm install
 
 COPY . .
 # On génère le client Prisma AVANT le build NestJS
+COPY prisma ./prisma/
 RUN npx prisma generate
 RUN npm run build
 
