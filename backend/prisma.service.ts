@@ -12,21 +12,20 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
   constructor() {
     super({
-      log: [
-        { emit: 'stdout', level: 'error' },
-        { emit: 'stdout', level: 'warn' },
-      ],
+      log: ['error', 'warn'],
     });
   }
 
   async onModuleInit() {
+    this.logger.log('🚀 Initialisation du client Prisma...');
+    
     this.$connect()
       .then(() => {
-        this.logger.log('✅ DATABASE CONNECTED SUCCESSFULLY');
+        this.logger.log('✅ Connecté à la base de données via Cloud SQL Socket');
       })
       .catch((err) => {
-        this.logger.error('❌ DATABASE CONNECTION ERROR');
-        this.logger.error(err);
+        this.logger.error('❌ Erreur de connexion database (non-bloquante) :');
+        this.logger.error(err.message);
       });
   }
 
