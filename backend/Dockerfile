@@ -1,5 +1,5 @@
 # --- 1. Phase de BUILD ---
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Installation de libc6-compat pour Prisma sur Alpine
 RUN apk add --no-cache libc6-compat
@@ -18,7 +18,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # --- 2. Phase de RUN ---
-FROM node:20-alpine
+FROM node:22-alpine
 WORKDIR /backend
 
 # Re-installation de libc6-compat pour l'exécution

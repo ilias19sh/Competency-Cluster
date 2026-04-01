@@ -2,7 +2,7 @@ import {
   Injectable,
   OnModuleDestroy,
   OnModuleInit,
-  Logger
+  Logger,
 } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
@@ -13,21 +13,21 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   constructor() {
     super({
       log: [
-        { emit: 'event', level: 'query' },
         { emit: 'stdout', level: 'error' },
-        { emit: 'stdout', level: 'info' },
         { emit: 'stdout', level: 'warn' },
       ],
     });
   }
 
   async onModuleInit() {
-    try {
-      await this.$connect();
-      this.logger.log('✅ Connecté avec succès à Cloud SQL via Prisma');
-    } catch (error) {
-      this.logger.error('❌ Échec de la connexion à la base de données:', error);
-    }
+    this.$connect()
+      .then(() => {
+        this.logger.log('✅ DATABASE CONNECTED SUCCESSFULLY');
+      })
+      .catch((err) => {
+        this.logger.error('❌ DATABASE CONNECTION ERROR');
+        this.logger.error(err);
+      });
   }
 
   async onModuleDestroy() {
