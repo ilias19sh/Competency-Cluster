@@ -15,7 +15,10 @@ export function CcProgressBar({
   const startGradient = Math.max(0, value - 15);
   const endGradient = Math.min(100, value + 15);
 
-  const dynamicGradient = `linear-gradient(90deg, 
+  const dynamicGradient =
+    value >= 100
+      ? '#FF914D'
+      : `linear-gradient(90deg, 
     #FF914D 0%, 
     #FF914D ${startGradient}%, 
     #8C52FF ${endGradient}%, 

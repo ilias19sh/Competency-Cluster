@@ -1,0 +1,273 @@
+.page {
+  min-height: 100vh;
+  padding: 2.6rem 2rem 2.8rem;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.logoWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+}
+
+.logo {
+  width: clamp(5.5rem, 10vw, 7.75rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.progressSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.progressWrapper {
+  width: min(49rem, 100%);
+}
+
+.cardSection {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 1rem;
+}
+
+.cardGlow {
+  position: absolute;
+  width: min(38rem, 90vw);
+  height: min(24rem, 70vw);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(140, 82, 255, 0.18) 0%, rgba(140, 82, 255, 0) 70%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(30.5rem, 100%);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.2rem;
+}
+
+.titleBlock :global(h1),
+.titleBlock :global(h2),
+.titleBlock :global(h3),
+.titleBlock :global(h4),
+.titleBlock :global(h5),
+.titleBlock :global(h6) {
+  color: #2f2f2f;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  font-size: clamp(1.65rem, 2vw, 2rem);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.input,
+.selectInput {
+  height: 2.35rem;
+  border: none;
+  background: #f0f0f0;
+  color: #8a8a8a;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.input::placeholder,
+.selectInput::placeholder {
+  color: #989898;
+}
+
+.teacherBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.feedbackText {
+  text-align: center;
+}
+
+.checkboxRoot {
+  align-items: center;
+}
+
+.checkboxInput {
+  border-color: #c9b8ff;
+}
+
+.checkboxLabel {
+  color: #626262;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.selectGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.programSelect {
+  background: #fff1e6;
+}
+
+.levelSelect {
+  background: #f0eaff;
+}
+
+.metaText {
+  text-align: center;
+}
+
+.actionsSection {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nextButton {
+  min-width: 6rem;
+  align-self: flex-end;
+}
+
+.statusSection {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0 2rem;
+}
+
+.statusContent {
+  width: min(62rem, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.statusTitle {
+  color: #111111;
+  font-size: clamp(2.2rem, 3vw, 2.75rem);
+  font-weight: 500;
+}
+
+.statusContent :global(h1),
+.statusContent :global(h2),
+.statusContent :global(h3) {
+  text-shadow: none;
+}
+
+.circleWrapper {
+  margin: 3.25rem 0 1.35rem;
+}
+
+.statusLabel {
+  margin-bottom: 8.5rem;
+  font-size: 1.1rem;
+}
+
+.statusParagraph {
+  max-width: 58rem;
+  line-height: 1.3;
+  font-size: clamp(1.15rem, 1.8vw, 1.3rem);
+}
+
+.completedTitle {
+  color: #111111;
+  font-size: clamp(2.9rem, 6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.completedSubtitle {
+  margin: 7rem 0 8rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+}
+
+.startButton {
+  min-width: 22rem;
+  height: 3.35rem;
+  font-size: 0.98rem;
+  border-radius: 999px;
+  margin-top: 5rem;
+}
+
+@media (max-width: 48rem) {
+  .page {
+    padding: 2.75rem 1rem 2rem;
+  }
+
+  .logoWrapper {
+    margin-bottom: 1.2rem;
+  }
+
+  .cardSection {
+    padding-top: 1.5rem;
+  }
+
+  .card {
+    width: min(100%, 28rem);
+  }
+
+  .formGrid,
+  .selectGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .actionsSection {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .nextButton {
+    width: min(12rem, 100%);
+  }
+
+  .statusLabel {
+    margin-bottom: 2.5rem;
+  }
+
+  .completedSubtitle {
+    margin: 1.75rem 0 3rem;
+  }
+
+  .startButton {
+    width: min(18rem, 100%);
+  }
+}
