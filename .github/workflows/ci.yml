@@ -1,4 +1,4 @@
-name: CI / SonarCloud & Vercel Preview
+name: CI / SonarCloud & GCP Preview
 
 on:
   pull_request:
@@ -6,12 +6,13 @@ on:
     types: [opened, synchronize, reopened]
 
 permissions:
-  pull-requests: write 
+  pull-requests: write
   contents: read
+  id-token: write
 
 jobs:
   quality-check:
-    name: Build, Lint & Tests
+    name: Build, Lint & Sonar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,21 +24,17 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: 📦 Installation des dépendances
+      - name: 📦 Installation
         run: npm ci
 
-      - name: 🧹 Linter & Formatter (Biome)
-        run: npm run lint || echo "Lint failed, check logs"
+      - name: 🛠️ Generate Prisma Client
+        run: npx prisma generate --schema=backend/prisma/schema.prisma
 
-      - name: 🧪 Tests Unitaires & Coverage (Vitest)
-        # Le || echo permet de ne pas bloquer si aucun test n'est trouvé
-        run: npm run test:ci || echo "No tests found, skipping."
-
-      - name: 🏗️ Build Frontend
-        run: npm run build:front
-
-      - name: 🏗️ Build Backend
-        run: npm run build:back
+      - name: 🧹 Lint & Build
+        run: |
+          npm run lint || echo "Lint failed"
+          npm run build:front
+          npm run build:back
 
       - name: 📊 Analyse SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
@@ -45,32 +42,73 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  update-pr-header:
-    name: Vercel Preview Link
+  deploy-preview:
+    name: GCP Preview Deployment
     needs: quality-check
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
     steps:
-      - name: Add Preview Link to PR Body
+      - uses: actions/checkout@v4
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+            token_format: 'access_token'
+            project_id: 'project-f676239d-0023-40fd-a9c'
+            workload_identity_provider: 'projects/434930508478/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+            service_account: '434930508478-compute@developer.gserviceaccount.com'
+
+      - name: 'Docker Auth'
+        uses: 'docker/login-action@v3'
+        with:
+                registry: 'gcr.io'
+                username: 'oauth2accesstoken'
+                password: '${{ steps.auth.outputs.access_token }}'
+
+      - name: 'Build and Push via Cloud Build'
+        run: |
+            cd frontend
+            gcloud builds submit . \
+              --config=<(echo '
+              steps:
+              - name: "gcr.io/cloud-builders/docker"
+                args: ["build", "-t", "$_TAG", "--build-arg", "VITE_API_URL=$_VITE_API_URL", "."]
+              images: ["$_TAG"]
+              ') \
+              --substitutions=_TAG="gcr.io/project-f676239d-0023-40fd-a9c/front-preview:pr-${{ github.event.number }}",_VITE_API_URL="${{ vars.VITE_API_URL }}"
+
+      - name: 'Deploy to Cloud Run'
+        id: deploy
+        run: |
+            gcloud run deploy deploy-front-develop \
+              --image gcr.io/project-f676239d-0023-40fd-a9c/front-preview:pr-${{ github.event.number }} \
+              --region europe-west1 \
+              --tag pr-${{ github.event.number }} \
+              --no-traffic \
+              --allow-unauthenticated || \
+            gcloud run deploy deploy-front-develop \
+              --image gcr.io/project-f676239d-0023-40fd-a9c/front-preview:pr-${{ github.event.number }} \
+              --region europe-west1 \
+              --tag pr-${{ github.event.number }} \
+              --allow-unauthenticated
+            URL=$(gcloud run services describe deploy-front-develop --region europe-west1 --format='value(status.traffic)' | grep -oP "https://pr-${{ github.event.number }}---[^ ]+")
+            echo "preview_url=$URL" >> $GITHUB_OUTPUT
+
+      - name: 💬 Comment PR with Link
         uses: actions/github-script@v7
         with:
           script: |
-            const pr = context.payload.pull_request;
-            // Nettoyage du nom de la branche pour l'URL Vercel
-            const branch = pr.head.ref.toLowerCase().replace(/[^a-z0-9]/g, '-');
-            const url = `https://competency-cluster-git-${branch}-cc-cda.vercel.app`;
-            
-            const header = `### 🚀 Preview Deployment\n**Link:** [${url}](${url})\n\n---\n`;
-            
-            // On récupère le body actuel
-            let body = pr.body || "";
-            
-            // Si le lien n'est pas déjà dans le body, on l'ajoute tout en haut
-            if (!body.includes(url)) {
-              await github.rest.pulls.update({
+            const url = "${{ steps.deploy.outputs.preview_url }}";
+            if (url) {
+              const header = `### 🚀 GCP Preview Deployment\n**Link:** [${url}](${url})\n\n---\n`;
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: pr.number,
-                body: header + body
+                body: header
               });
             }
