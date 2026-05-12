@@ -1,7 +1,14 @@
 import {BadRequestException,ConflictException,Injectable,UnauthorizedException} from '@nestjs/common';
 import { PrismaService } from '../../../prisma.service';
+import * as bcrypt from 'bcrypt';
 
 type UserRole = 'admin' | 'teacher' | 'student';
+
+
+const PASSWORD =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/;
+
+const BCRYPT_ROUNDS = 10;
 
 @Injectable()
 export class AuthService {
@@ -14,6 +21,12 @@ export class AuthService {
 
     if (password !== confirmPassword) {
       throw new BadRequestException('Les mots de passe ne correspondent pas');
+    }
+
+    if (!PASSWORD.test(password)) {
+      throw new BadRequestException(
+        'The password must contain at least 12 characters, including one lowercase letter, one uppercase letter, one number, and one special character.',
+      );
     }
 
     const existingUser = await this.prisma.user.findUnique({
@@ -34,13 +47,15 @@ export class AuthService {
       throw new BadRequestException("Aucune ecole par defaut n'est disponible");
     }
 
-    // On cree ici un compte minimal : les vraies infos profile seront completees ensuite.
+    const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+
+    //  on met des infos random les vraies infos seront mises plus tard 
     const user = await this.prisma.user.create({
       data: {
         email,
-        password,
-        first_name: 'TEMP',
-        last_name: 'TEMP',
+        password: passwordHash,
+        first_name: 'John',
+        last_name: 'Doe',
         phone: '0000000000',
         school_id: defaultSchool.id,
       },
@@ -69,8 +84,24 @@ export class AuthService {
       },
     });
 
-    if (!user || user.password !== password) {
+    if (!user) {
       throw new UnauthorizedException('Email ou mot de passe invalide');
+    }
+
+    const passwordMatches = user.password.startsWith('$2')
+      ? await bcrypt.compare(password, user.password)
+      : user.password === password;
+
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Email ou mot de passe invalide');
+    }
+
+    if (!user.password.startsWith('$2')) {
+      const upgradedHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { password: upgradedHash },
+      });
     }
 
     // Le role n'est pas stocke directement dans User : on le deduit des relations Prisma.
@@ -111,7 +142,7 @@ export class AuthService {
       throw new BadRequestException("L'utilisateur a completer est introuvable");
     }
 
-    // On remplace ici les valeurs temporaires du register par les vraies informations du user.
+    // ici on met a jour les vrais info a la place des infos random
     const updatedUser = await this.prisma.user.update({
       where: { id: existingUser.id },
       data: {

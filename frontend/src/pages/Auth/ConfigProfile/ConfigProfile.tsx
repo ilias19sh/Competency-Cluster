@@ -7,6 +7,8 @@ import { CcCircleProgress } from '../../../components/progress/CcCircleProgressB
 import { CcProgressBar } from '../../../components/progress/CcProgressBar/CcProgressBar.component';
 import { CcText } from '../../../components/typography/CcText/CcText.component';
 import { CcTitle } from '../../../components/typography/CcTitle/CcTitle.component';
+import { apiBaseUrl } from '../../../config/api';
+import { saveAuthUser } from '../../../utils/authSession';
 import classes from './ConfigProfile.module.css';
 
 type ConfigProfileLocationState = {
@@ -15,6 +17,10 @@ type ConfigProfileLocationState = {
 };
 
 type CompleteProfileResponse = {
+  id?: number;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
   role?: 'admin' | 'teacher' | 'student';
   message?: string | string[];
 };
@@ -49,7 +55,7 @@ export default function ConfigProfile() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/auth/profile', {
+      const response = await fetch(`${apiBaseUrl}/auth/profile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,8 +93,25 @@ export default function ConfigProfile() {
   };
 
   const handleStart = () => {
+    const targetRole = assignedRole ?? 'student';
+
+    saveAuthUser({
+      userId: Number(state?.userId),
+      email: state?.email,
+      firstName,
+      lastName,
+      role: targetRole,
+    });
+
     if (assignedRole === 'teacher') {
-      navigate('/teacher');
+      navigate('/teacher', {
+        state: {
+          userId: state?.userId,
+          email: state?.email,
+          firstName,
+          lastName,
+        },
+      });
       return;
     }
 

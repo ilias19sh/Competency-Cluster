@@ -1,0 +1,375 @@
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.header {
+  position: relative;
+  height: 3.7rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  width: 2rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.welcomeText {
+  justify-self: center;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerIcon {
+  color: #5f5f5f;
+}
+
+.content {
+  padding: 1.5rem 3.6rem 2rem;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 1.3rem;
+}
+
+.headingText {
+  color: #6b6b6b;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 500;
+}
+
+.headingChevron {
+  color: #7a7a7a;
+  margin-top: 0.2rem;
+}
+
+.backButton {
+  min-width: 7.5rem;
+  border-radius: 0.9rem;
+}
+
+.feedbackMessage {
+  margin-top: 1rem;
+}
+
+.emptyState {
+  position: relative;
+  min-height: 22rem;
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyGlow {
+  position: absolute;
+  width: min(48rem, 100%);
+  height: 18rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(140, 82, 255, 0.12) 0%, rgba(255, 145, 77, 0.07) 45%, rgba(255, 255, 255, 0) 72%);
+  filter: blur(24px);
+}
+
+.emptyCard {
+  position: relative;
+  z-index: 1;
+  width: min(32rem, 100%);
+  border-radius: 1.6rem;
+  padding: 2.2rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(245, 237, 255, 0.92) 0%, rgba(255, 245, 239, 0.92) 100%);
+}
+
+.emptyTitle {
+  margin-bottom: 0.7rem;
+}
+
+.grid {
+  margin-top: 2.4rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+
+.card {
+  border-radius: 1.1rem;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, rgba(226, 211, 255, 0.95) 0%, rgba(255, 228, 212, 0.95) 100%);
+  border: 1px solid rgba(255, 233, 220, 0.95);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  transition: transform 160ms ease;
+}
+
+.cardHeader {
+  border-radius: 0.75rem;
+  padding: 0.45rem 0.8rem;
+  background: linear-gradient(90deg, #ff914d 0%, #8c52ff 100%);
+  text-align: center;
+}
+
+.cardTitle {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  font-weight: 400;
+}
+
+.cardBody {
+  min-height: 10.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 1rem 0.7rem 0.3rem;
+  background: radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 1) 0%, rgba(255, 248, 243, 0.96) 38%, rgba(239, 229, 255, 0.92) 100%);
+}
+
+.questionCount {
+  margin: 0;
+  color: #cb7f93;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.progressLabel {
+  color: #cb7f93;
+  text-transform: none;
+}
+
+.cardFooter {
+  padding: 0 0.35rem 0.2rem;
+}
+
+.cardDescription {
+  margin: 0;
+  color: #7e7e7e;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.editorSection {
+  margin-top: 2.3rem;
+}
+
+.editorHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.editorTitle {
+  color: #6b6b6b;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 500;
+}
+
+.questionsPanel {
+  border-radius: 1.3rem;
+  padding: 1rem 1.1rem 1.2rem;
+  background: linear-gradient(135deg, rgba(255, 234, 226, 0.92) 0%, rgba(244, 236, 255, 0.92) 100%);
+}
+
+.questionsPanelTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.addQuestionButton {
+  min-width: 8rem;
+  border-radius: 999px;
+}
+
+.questionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.questionCard {
+  border-radius: 1rem;
+  padding: 0.85rem;
+  background: rgba(237, 228, 250, 0.7);
+}
+
+.questionCardTop {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.questionInput {
+  height: 2.65rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #6f6f6f;
+  box-shadow: none;
+}
+
+.removeQuestionButton {
+  border: none;
+  background: transparent;
+  color: #8d8d8d;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.answersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.answerRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.answerRowCorrect {
+  border-radius: 999px;
+  padding: 0.15rem 0.2rem;
+  background: linear-gradient(90deg, rgba(255, 145, 77, 0.18) 0%, rgba(140, 82, 255, 0.18) 100%);
+}
+
+.answerToggle {
+  min-width: 4.3rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 0.7rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #7c7c7c;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.answerToggleActive {
+  background: linear-gradient(90deg, #ff914d 0%, #8c52ff 100%);
+  color: #ffffff;
+}
+
+.answerInput {
+  height: 2.35rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.94);
+  color: #6f6f6f;
+  box-shadow: none;
+}
+
+.removeAnswerButton {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #8c52ff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.addAnswerButton {
+  margin-top: 0.65rem;
+  border: none;
+  background: transparent;
+  color: #8c52ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.saveButtonRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+@media (max-width: 70rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 56rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .header {
+    height: auto;
+    padding: 0.9rem 1rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .headerActions {
+    justify-content: center;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .topRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editorHeader,
+  .questionsPanelTop {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heading {
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .questionCardTop {
+    grid-template-columns: 1fr;
+  }
+
+  .answerRow {
+    grid-template-columns: 1fr;
+  }
+}
