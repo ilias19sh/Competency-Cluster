@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import type { ReactNode } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { theme } from './theme';
 import Storybook from './components/storybook';
@@ -6,7 +7,35 @@ import Authentification from './pages/Auth/Authentification/Authentification';
 import ConfigProfile from './pages/Auth/ConfigProfile/ConfigProfile';
 import Dashboard from './pages/Admin/Dashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
+import TeacherSubModules from './pages/Teacher/TeacherSubModules';
 import StudentHome from './pages/Student/StudentHome';
+import { getAuthUser } from './utils/authSession';
+import type { AuthRole } from './utils/authSession';
+
+type ProtectedRouteProps = {
+  allowedRoles: AuthRole[];
+  children: ReactNode;
+};
+
+const roleHome: Record<AuthRole, string> = {
+  admin: '/admin',
+  teacher: '/teacher',
+  student: '/student',
+};
+
+function ProtectedRoute({ allowedRoles, children }: ProtectedRouteProps) {
+  const authUser = getAuthUser();
+
+  if (!authUser) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!allowedRoles.includes(authUser.role)) {
+    return <Navigate to={roleHome[authUser.role]} replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   return (
@@ -15,9 +44,46 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Authentification />} />
           <Route path="/config-profile" element={<ConfigProfile />} />
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/teacher" element={<TeacherDashboard />} />
-          <Route path="/student" element={<StudentHome />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teacher"
+            element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teacher/modules/:moduleId/submodules"
+            element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherSubModules />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teacher/modules/:moduleId/submodules/:submoduleId"
+            element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherSubModules />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentHome />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/storybook" element={<Storybook />} />
 

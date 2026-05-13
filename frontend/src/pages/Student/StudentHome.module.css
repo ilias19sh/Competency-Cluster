@@ -1,0 +1,414 @@
+/* Page shell */
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #5f5f5f;
+}
+
+/* Top navigation bar */
+.header {
+  height: 3.7rem;
+  padding: 0 1rem 0 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logo {
+  width: 2.1rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLink {
+  color: #4f4f4f;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerIcon {
+  color: #616161;
+}
+
+/* User avatar in header */
+.avatar {
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ff914d 0%, #8c52ff 100%);
+}
+
+/* Progression hero block under the header */
+.progressHero {
+  min-height: 8.9rem;
+  display: grid;
+  grid-template-columns: 1.1fr 2.6fr 0.9fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.6rem;
+  background: linear-gradient(90deg, rgba(255, 145, 77, 0.12) 0%, rgba(140, 82, 255, 0.12) 100%);
+}
+
+.progressIntro {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.progressTitle {
+  color: #6c6c6c;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+}
+
+.sectionChevron {
+  color: #7a7a7a;
+  margin-top: 0.25rem;
+}
+
+/* Three progression circles */
+.progressMetrics {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 3rem);
+}
+
+.progressCircleItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.circleShadow {
+  filter: drop-shadow(0 6px 6px rgba(140, 82, 255, 0.22));
+}
+
+.progressLabel {
+  margin-top: -1.4rem;
+}
+
+/* Continue button on the hero */
+.progressAction {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.continueButton {
+  min-width: 7.8rem;
+  border-radius: 999px;
+}
+
+/* Goals and ranking cards row */
+.dashboardGrid {
+  padding: 1.5rem 3.4rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.goalsCard {
+  background: #f1ebff !important;
+  box-shadow: none !important;
+}
+
+.rankingCard {
+  background: #fff1e8 !important;
+  box-shadow: none !important;
+}
+
+/* Shared card top row */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Small pill badges inside cards */
+.pillViolet,
+.pillOrange {
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pillViolet {
+  background: linear-gradient(90deg, #8c52ff 0%, #a27dff 100%);
+}
+
+.pillOrange {
+  background: linear-gradient(90deg, #ff914d 0%, #f8a15f 100%);
+}
+
+/* Goals list */
+.goalList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.goalItem {
+  min-height: 2.2rem;
+  border-radius: 0.55rem;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.goalReward {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.goalBadge {
+  color: #4d7ef7;
+  font-size: 0.95rem;
+}
+
+/* Ranking card content */
+.rankingContent {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.rankingTabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rankingTab {
+  width: 5.5rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  background: linear-gradient(90deg, rgba(140, 82, 255, 0.45) 0%, rgba(255, 145, 77, 0.5) 100%);
+}
+
+.rankingTabActive {
+  background: linear-gradient(90deg, #8c52ff 0%, #ff914d 100%);
+}
+
+.rankingMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.rankingScoreBox {
+  min-height: 8.4rem;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 172, 238, 0.45);
+}
+
+.rankingScore {
+  font-size: clamp(3.2rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, #ff914d 0%, #8c52ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rankingStats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.rankingTrend {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #7bbf66;
+  font-size: 1rem;
+}
+
+/* Divider before submodules */
+.separator {
+  height: 1px;
+  margin: 1.35rem 3.4rem 0;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Submodules section */
+.submodulesSection {
+  padding: 1.55rem 3.4rem 2rem;
+}
+
+.submoduleHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 1.4rem;
+}
+
+.submoduleTitle {
+  color: #6c6c6c;
+  font-size: 1.9rem;
+  font-weight: 500;
+}
+
+/* Cards grid for submodules */
+.submoduleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.submoduleCard {
+  background: #f4eaff !important;
+  box-shadow: none !important;
+}
+
+/* Gradient block on top of each submodule card */
+.submoduleHero {
+  min-height: 4.8rem;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, rgba(255, 145, 77, 0.9) 0%, rgba(140, 82, 255, 0.96) 100%);
+}
+
+.submoduleCategory {
+  position: absolute;
+  top: 0.15rem;
+  right: 0.45rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.72rem;
+}
+
+.submoduleName {
+  color: #ffffff;
+  font-size: clamp(2rem, 3.5vw, 3.15rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.submoduleBody {
+  padding: 0.75rem 0.1rem 0;
+  min-height: 4.4rem;
+}
+
+/* Bottom info row of submodule card */
+.submoduleFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.submoduleDot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #d2f5ff;
+}
+
+/* Tablet layout adjustments */
+@media (max-width: 75rem) {
+  .progressHero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .progressAction {
+    justify-content: center;
+  }
+
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .submoduleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 48rem) {
+  .header {
+    height: auto;
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .headerLeft {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .progressMetrics {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dashboardGrid,
+  .submodulesSection {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .separator {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .rankingContent {
+    grid-template-columns: 1fr;
+  }
+
+  .submoduleGrid {
+    grid-template-columns: 1fr;
+  }
+}

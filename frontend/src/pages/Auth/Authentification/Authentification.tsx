@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Checkbox, Divider, PasswordInput, TextInput } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { CcButton, CcCard, CcText, CcTitle } from '../../../components';
+import { apiBaseUrl } from '../../../config/api';
 import classes from './Authentification.module.css';
 
 type LoginResponse = {
@@ -42,7 +43,7 @@ export default function Authentification() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3001/auth/login', {
+      const response = await fetch(`${apiBaseUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ export default function Authentification() {
         throw new Error('You must accept the terms and conditions to continue');
       }
 
-      const response = await fetch('http://localhost:3001/auth/register', {
+      const response = await fetch(`${apiBaseUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
