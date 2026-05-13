@@ -7,7 +7,7 @@ import { CcCircleProgress } from '../../../components/progress/CcCircleProgressB
 import { CcProgressBar } from '../../../components/progress/CcProgressBar/CcProgressBar.component';
 import { CcText } from '../../../components/typography/CcText/CcText.component';
 import { CcTitle } from '../../../components/typography/CcTitle/CcTitle.component';
-import { apiBaseUrl } from '../../../config/api';
+import { VITE_API_BASE_URL } from '../../../config/api';
 import { saveAuthUser } from '../../../utils/authSession';
 import classes from './ConfigProfile.module.css';
 
@@ -55,7 +55,7 @@ export default function ConfigProfile() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/auth/profile`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/auth/profile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

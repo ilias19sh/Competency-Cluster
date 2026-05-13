@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IconBell, IconChevronRight, IconSettings } from '@tabler/icons-react';
 import { Box, TextInput } from '@mantine/core';
 import { CcButton, CcCircleProgress, CcText, CcTitle } from '../../components';
-import { apiBaseUrl } from '../../config/api';
+import { VITE_API_BASE_URL } from '../../config/api';
 import classes from './TeacherSubModules.module.css';
 
 type TeacherLocationState = {
@@ -116,7 +116,7 @@ export default function TeacherSubModules() {
 
       try {
         if (submoduleId) {
-          const submoduleResponse = await fetch(`${apiBaseUrl}/teacher-submodules/${submoduleId}`);
+          const submoduleResponse = await fetch(`${VITE_API_BASE_URL}/teacher-submodules/${submoduleId}`);
           const submoduleData = (await submoduleResponse.json()) as TeacherSubmoduleDetails | { message?: string | string[] };
 
           if (!submoduleResponse.ok) {
@@ -164,7 +164,7 @@ export default function TeacherSubModules() {
             });
           }
         } else {
-          const submodulesResponse = await fetch(`${apiBaseUrl}/teacher-submodules/module/${moduleId}`);
+          const submodulesResponse = await fetch(`${VITE_API_BASE_URL}/teacher-submodules/module/${moduleId}`);
           const submodulesData = (await submodulesResponse.json()) as TeacherSubmodule[] | { message?: string | string[] };
 
           if (!submodulesResponse.ok) {
@@ -181,7 +181,7 @@ export default function TeacherSubModules() {
         }
 
         if (!routeState?.module && teacherUser?.userId) {
-          const modulesResponse = await fetch(`${apiBaseUrl}/teacher-modules/teacher/${teacherUser.userId}`);
+          const modulesResponse = await fetch(`${VITE_API_BASE_URL}/teacher-modules/teacher/${teacherUser.userId}`);
           const modulesData = (await modulesResponse.json()) as TeacherModule[] | { message?: string | string[] };
 
           if (modulesResponse.ok) {
@@ -288,7 +288,7 @@ export default function TeacherSubModules() {
     setIsSaving(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/teacher-submodules/${submoduleId}/questions`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/teacher-submodules/${submoduleId}/questions`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

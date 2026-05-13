@@ -3,7 +3,7 @@ import { Box, Select, TextInput, Textarea } from '@mantine/core';
 import {IconBell,IconChevronDown,IconChevronRight,IconFilter,IconSearch,IconSettings} from '@tabler/icons-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CcButton, CcCircleProgress, CcText, CcTitle } from '../../components';
-import { apiBaseUrl } from '../../config/api';
+import { VITE_API_BASE_URL } from '../../config/api';
 import classes from './TeacherDashboard.module.css';
 
 const actionItems = [
@@ -152,7 +152,7 @@ export default function TeacherDashboard() {
     setIsLoadingModules(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/teacher-modules/teacher/${teacherId}`);
+      const response = await fetch(`${VITE_API_BASE_URL}/teacher-modules/teacher/${teacherId}`);
       const data = (await response.json()) as TeacherModule[] | { message?: string | string[] };
 
       if (!response.ok) {
@@ -201,7 +201,7 @@ export default function TeacherDashboard() {
     setIsSubmittingModule(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/teacher-modules`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/teacher-modules`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export default function TeacherDashboard() {
         }))
         .filter((question) => question.value);
 
-      const response = await fetch(`${apiBaseUrl}/teacher-submodules`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/teacher-submodules`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
