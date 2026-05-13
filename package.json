@@ -4,9 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "node scripts/banner.js && concurrently -k -n BACKEND,FRONTEND -c bgBlue.bold,bgMagenta.bold \"npm run dev:backend\" \"npm run dev:frontend\"",
-		"dev:backend": "npm --prefix backend run start:dev",
-		"dev:frontend": "wait-on http://localhost:5173 && npm --prefix frontend run dev",
+  		"dev": "node scripts/banner.js && concurrently -k -n BACKEND,FRONTEND -c bgBlue.bold,bgMagenta.bold \"npm run dev:backend\" \"npm run dev:frontend\"",
+  		"dev:backend": "npm --prefix backend run start:dev",
+  		"dev:frontend": "npm --prefix frontend run dev",
 		"test": "vitest",
 		"test:ci": "vitest run --coverage",
 		"prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install || true; fi",
