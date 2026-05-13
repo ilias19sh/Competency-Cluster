@@ -3,7 +3,7 @@ steps:
     args: [
       'build', 
       '-t', 'gcr.io/$PROJECT_ID/front-dev', 
-      '--build-arg', 'VITE_API_URL=${_VITE_API_URL}',
+      '--build-arg', 'VITE_API_URL=${_VITE_API_URL}', 
       '-f', 'frontend/Dockerfile', 
       '.'
     ]
