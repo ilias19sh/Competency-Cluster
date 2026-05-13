@@ -1,35 +1,32 @@
 steps:
-  # 1. Build de l'image Docker
   - name: 'gcr.io/cloud-builders/docker'
-    dir: 'backend'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mon-backend-image', '.']
+    args: [
+      'build', 
+      '-t', 'gcr.io/$PROJECT_ID/front-dev', 
+      '--build-arg', 'VITE_API_URL=${_VITE_API_URL}', 
+      '-f', 'frontend/Dockerfile', 
+      '.'
+    ]
 
-  # 2. Push de l'image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/mon-backend-image']
+    args: ['push', 'gcr.io/$PROJECT_ID/front-dev']
 
-  # 3. Déploiement
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'cda-back'
+      - 'mon-app-front-dev'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/mon-backend-image'
+      - 'gcr.io/$PROJECT_ID/front-dev'
       - '--region'
-      - 'europe-west9'
+      - 'europe-west1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-      - '--set-cloudsql-instances'
-      - 'project-f676239d-0023-40fd-a9c:europe-west9:cc-bdd'
-      - '--set-secrets'
-      - 'DATABASE_URL=DATABASE_URL:latest'
 
-images:
-  - 'gcr.io/$PROJECT_ID/mon-backend-image'
-
-# Cette section règle ton erreur de "logs_bucket"
 options:
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _VITE_API_URL: https://cda-back-434930508478.europe-west9.run.app

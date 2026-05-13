@@ -7,7 +7,6 @@ COPY . .
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
-RUN npm run build
 
 # 2. Phase de RUN (On utilise Nginx pour servir les fichiers statiques)
 FROM --platform=linux/amd64 nginx:stable-alpine
