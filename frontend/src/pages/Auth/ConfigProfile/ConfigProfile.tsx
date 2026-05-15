@@ -1,5 +1,5 @@
 import { Checkbox, Select, TextInput } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CcButton } from '../../../components/actions/CcButton/CcButton.component';
 import { CcCard } from '../../../components/displayData/CcCard/CcCard.component';
@@ -42,6 +42,54 @@ export default function ConfigProfile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [screen, setScreen] = useState<ConfigProfileScreen>('form');
   const [assignedRole, setAssignedRole] = useState<'admin' | 'teacher' | 'student' | null>(null);
+  const [programOptions, setProgramOptions] = useState<string[]>([]);
+  const [programsLoading, setProgramsLoading] = useState(false);
+  const [studyLevelOptions, setStudyLevelOptions] = useState<string[]>([]);
+  const [studyLevelsLoading, setStudyLevelsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isTeacher) {
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const loadOptions = async () => {
+      setProgramsLoading(true);
+      setStudyLevelsLoading(true);
+      try {
+        const [programsResponse, studyLevelsResponse] = await Promise.all([
+          fetch(`${VITE_API_BASE_URL}/auth/programs`, { signal: controller.signal }),
+          fetch(`${VITE_API_BASE_URL}/auth/study-levels`, { signal: controller.signal }),
+        ]);
+
+        if (!programsResponse.ok) {
+          throw new Error('Unable to load programs');
+        }
+        if (!studyLevelsResponse.ok) {
+          throw new Error('Unable to load study levels');
+        }
+
+        const titles = (await programsResponse.json()) as string[];
+        const years = (await studyLevelsResponse.json()) as string[];
+        setProgramOptions(Array.isArray(titles) ? titles : []);
+        setStudyLevelOptions(Array.isArray(years) ? years : []);
+      } catch (err) {
+        if (err instanceof Error && err.name === 'AbortError') {
+          return;
+        }
+        setProgramOptions([]);
+        setStudyLevelOptions([]);
+      } finally {
+        setProgramsLoading(false);
+        setStudyLevelsLoading(false);
+      }
+    };
+
+    void loadOptions();
+
+    return () => controller.abort();
+  }, [isTeacher]);
 
   const handleNext = async () => {
     setError('');
@@ -221,10 +269,11 @@ export default function ConfigProfile() {
                 {!isTeacher ? (
                   <div className={classes.selectGrid}>
                     <Select
-                      placeholder="Program"
-                      data={['CDA']}
+                      placeholder={programsLoading ? 'Loading programs…' : 'Program'}
+                      data={programOptions}
                       value={program}
                       onChange={setProgram}
+                      disabled={programsLoading}
                       radius="xl"
                       rightSectionPointerEvents="none"
                       classNames={{
@@ -233,10 +282,13 @@ export default function ConfigProfile() {
                     />
 
                     <Select
-                      placeholder="Study level"
-                      data={['2025-2026']}
+                      placeholder={
+                        studyLevelsLoading ? 'Loading study levels…' : 'Study level'
+                      }
+                      data={studyLevelOptions}
                       value={studyLevel}
                       onChange={setStudyLevel}
+                      disabled={studyLevelsLoading}
                       radius="xl"
                       rightSectionPointerEvents="none"
                       classNames={{

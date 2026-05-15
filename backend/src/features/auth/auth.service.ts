@@ -120,6 +120,24 @@ export class AuthService {
     };
   }
 
+  async getAllPrograms() {
+    const programs = await this.prisma.program.findMany({
+      select: { title: true },
+      orderBy: { title: 'asc' },
+    });
+
+    return [...new Set(programs.map((p) => p.title))];
+  }
+
+  async getAllStudyYears() {
+    const rows = await this.prisma.promo.groupBy({
+      by: ['study_year'],
+      orderBy: { study_year: 'asc' },
+    });
+
+    return rows.map((r) => r.study_year);
+  }
+
   async completeProfile(
     userId: number,
     firstName: string,
