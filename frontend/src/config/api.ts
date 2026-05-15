@@ -4,6 +4,6 @@ const defaultApiUrl =
   typeof window !== 'undefined' && window.location.hostname.includes('competency-cluster.fr')
     ? productionApiUrl
     : localApiUrl;
-const apiUrl = import.meta.env.VITE_API_URL || defaultApiUrl;
 
-export const VITE_API_BASE_URL = apiUrl.replace(/\/$/, '');
+
+export const VITE_API_BASE_URL = defaultApiUrl.replace(/\/$/, '');
