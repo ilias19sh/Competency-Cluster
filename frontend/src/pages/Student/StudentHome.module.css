@@ -28,6 +28,11 @@
   object-fit: contain;
 }
 
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+}
+
 .nav {
   display: flex;
   align-items: center;

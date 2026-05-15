@@ -9,6 +9,8 @@ import Dashboard from './pages/Admin/Dashboard';
 import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 import TeacherSubModules from './pages/Teacher/TeacherSubModules';
 import StudentHome from './pages/Student/StudentHome';
+import StudentModules from './pages/Student/StudentModules';
+import StudentSubmodules from './pages/Student/StudentSubmodules';
 import { getAuthUser } from './utils/authSession';
 import type { AuthRole } from './utils/authSession';
 
@@ -81,6 +83,30 @@ export default function App() {
             element={
               <ProtectedRoute allowedRoles={['student']}>
                 <StudentHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/modules"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentModules />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/submodules"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentSubmodules />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/modules/:moduleId/submodules"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentSubmodules />
               </ProtectedRoute>
             }
           />

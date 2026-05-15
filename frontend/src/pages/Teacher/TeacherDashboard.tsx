@@ -407,11 +407,13 @@ export default function TeacherDashboard() {
   return (
     <main className={classes.page}>
       <header className={classes.header}>
-        <img
-          src="/images/logo_cc_couleur.png"
-          alt="Competency Cluster"
-          className={classes.logo}
-        />
+        <button type="button" className={classes.logoButton} onClick={() => navigate('/teacher')} aria-label="Retour a l'accueil teacher">
+          <img
+            src="/images/logo_cc_couleur.png"
+            alt="Competency Cluster"
+            className={classes.logo}
+          />
+        </button>
 
         <CcText className={classes.welcomeText} color="#4f4f4f">
           Welcome on your HomePage Competency Cluster{teacherUser?.lastName ? `, ${teacherUser.lastName}.` : '.'}
