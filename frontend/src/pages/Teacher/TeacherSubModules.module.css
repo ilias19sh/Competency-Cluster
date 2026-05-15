@@ -20,6 +20,14 @@
   object-fit: contain;
 }
 
+.logoButton {
+  width: fit-content;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
 .welcomeText {
   justify-self: center;
   font-size: 0.95rem;
