@@ -13,8 +13,8 @@ RUN npm install
 
 COPY . .
 
-# Génération du client Prisma et build NestJS
-RUN npx prisma generate
+# Génération du client Prisma et build NestJS (pas besoin de DATABASE_URL réelle ici)
+RUN npx prisma generate --config ./prisma.config.ts
 RUN npm run build
 
 # --- 2. Phase de RUN ---
