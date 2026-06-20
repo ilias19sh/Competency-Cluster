@@ -1,35 +1,37 @@
 {
-	"name": "competency-cluster",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-  		"dev": "node scripts/banner.js && concurrently -k -n BACKEND,FRONTEND -c bgBlue.bold,bgMagenta.bold \"npm run dev:backend\" \"npm run dev:frontend\"",
-  		"dev:backend": "npm --prefix backend run start:dev",
-  		"dev:frontend": "npm --prefix frontend run dev",
-		"test": "vitest",
-		"test:ci": "vitest run --coverage",
-		"prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install || true; fi",
-		"lint": "npx @biomejs/biome check .",
-		"lint:fix": "npx @biomejs/biome check --write .",
-		"build:front": "npm run build --prefix frontend",
-		"build:back": "npm run build --prefix backend"
-	},
-	"keywords": [],
-	"author": " Ilias & Koman",
-	"license": "ISC",
-	"private": true,
-	"workspaces": [
-		"*"
-	],
-	"devDependencies": {
-		"@biomejs/biome": "2.3.12",
-		"@vitest/coverage-v8": "^4.0.18",
-		"chalk": "^5.6.2",
-		"concurrently": "^9.2.1",
-		"husky": "^9.1.7",
-		"jsdom": "^29.0.1",
-		"vitest": "^4.0.18",
-		"wait-on": "^9.0.3"
-	}
+  "name": "competency-cluster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node scripts/banner.js && concurrently -k -n BACKEND,FRONTEND -c bgBlue.bold,bgMagenta.bold \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix backend run start:dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "test": "vitest",
+    "test:ci": "vitest run --coverage",
+    "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install || true; fi",
+    "lint": "npx @biomejs/biome check .",
+    "lint:fix": "npx @biomejs/biome check --write .",
+    "build:front": "npm run build --prefix frontend",
+    "build:back": "npm run build --prefix backend"
+  },
+  "keywords": [],
+  "author": " Ilias & Koman",
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "*"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "2.3.12",
+    "@playwright/test": "^1.61.0",
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "chalk": "^5.6.2",
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "jsdom": "^29.0.1",
+    "vitest": "^4.0.18",
+    "wait-on": "^9.0.3"
+  }
 }
