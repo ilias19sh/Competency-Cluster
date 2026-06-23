@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { TeacherSubmodulesService } from './teacher-submodules.service';
+// 1. On importe DIRECTEMENT ta fonction depuis le dossier api
+import { generateQuiz } from '../../api/generateQuiz';
 
 @Controller('teacher-submodules')
 export class TeacherSubmodulesController {
@@ -33,6 +35,20 @@ export class TeacherSubmodulesController {
       body.program,
       body.studyLevel,
     );
+  }
+
+  // 🛠️ LA ROUTE CORRIGÉE : On court-circuite le service récalcitrant !
+  @Post('generate-ai')
+  async generateAiQuiz(
+    @Body()
+    body: {
+      theme: string;
+      numQuestions?: number;
+    },
+  ) {
+    // On appelle directement la fonction importée tout en haut
+    const quiz = await generateQuiz(body.theme, body.numQuestions ?? 3);
+    return quiz;
   }
 
   @Get('module/:moduleId')
