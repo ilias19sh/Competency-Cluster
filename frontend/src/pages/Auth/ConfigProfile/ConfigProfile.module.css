@@ -271,3 +271,34 @@
     width: min(18rem, 100%);
   }
 }
+
+@media (max-width: 34rem) {
+  .page {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .cardSection {
+    padding-top: 1rem;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .cardContent {
+    gap: 1rem;
+  }
+
+  .titleBlock :global(h1),
+  .titleBlock :global(h2),
+  .titleBlock :global(h3),
+  .titleBlock :global(h4),
+  .titleBlock :global(h5),
+  .titleBlock :global(h6) {
+    font-size: 1.45rem;
+  }
+
+  .startButton {
+    min-width: 0;
+  }
+}

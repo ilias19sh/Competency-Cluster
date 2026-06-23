@@ -3,6 +3,7 @@ import { Box } from '@mantine/core';
 import { IconBell, IconChevronRight, IconSettings, IconUserCircle } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CcButton, CcCard, CcCircleProgress, CcText, CcTitle } from '../../components';
+import { LogoutButton } from '../../components/LogoutButton';
 import { VITE_API_BASE_URL } from '../../config/api';
 import { getAuthUser } from '../../utils/authSession';
 import classes from './StudentHome.module.css';
@@ -91,13 +92,14 @@ export default function StudentHome() {
           <nav className={classes.nav}>
             <Link to="/student/modules" className={classes.navLink}>Modules</Link>
             <Link to="/student/submodules" className={classes.navLink}>Submodules</Link>
-            <a href="#profile" className={classes.navLink}>My profile</a>
+            <Link to="/student/profile" className={classes.navLink}>My profile</Link>
           </nav>
         </div>
 
         <div className={classes.headerRight}>
           <IconSettings size={22} stroke={1.8} className={classes.headerIcon} />
           <IconBell size={22} stroke={1.8} className={classes.headerIcon} />
+          <LogoutButton />
           <div className={classes.avatar}>
             <IconUserCircle size={26} stroke={1.8} />
           </div>

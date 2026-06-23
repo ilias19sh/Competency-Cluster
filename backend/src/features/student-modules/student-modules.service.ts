@@ -91,6 +91,78 @@ export class StudentModulesService {
     }));
   }
 
+  async getStudentProfile(studentId: number) {
+    const student = await this.prisma.student.findUnique({
+      where: { id: Number(studentId) },
+      include: {
+        user: {
+          select: {
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        promo: {
+          include: {
+            program: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+        attempts: {
+          orderBy: {
+            creation_date: 'desc',
+          },
+          include: {
+            submodule: {
+              select: {
+                title: true,
+              },
+            },
+          },
+          take: 5,
+        },
+        _count: {
+          select: {
+            attempts: true,
+          },
+        },
+      },
+    });
+
+    if (!student) {
+      throw new BadRequestException('Le student demande est introuvable');
+    }
+
+    const averageScore =
+      student.attempts.length > 0
+        ? Math.round(student.attempts.reduce((total, attempt) => total + attempt.score, 0) / student.attempts.length)
+        : 0;
+
+    return {
+      id: student.id,
+      firstName: student.user.first_name,
+      lastName: student.user.last_name,
+      email: student.user.email,
+      phone: student.user.phone,
+      points: student.points,
+      program: student.promo.program.title,
+      studyLevel: student.promo.study_year,
+      promo: student.promo.title,
+      attemptsCount: student._count.attempts,
+      averageScore,
+      recentAttempts: student.attempts.map((attempt) => ({
+        id: attempt.id,
+        score: attempt.score,
+        submoduleTitle: attempt.submodule.title,
+        earnedElos: Math.round(attempt.score * 0.26),
+      })),
+    };
+  }
+
   async getSubmoduleQuiz(studentId: number, submoduleId: number) {
     const student = await this.prisma.student.findUnique({
       where: { id: Number(studentId) },

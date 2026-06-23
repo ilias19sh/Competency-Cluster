@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { IconBell, IconChevronRight, IconSettings, IconUserCircle } from '@tabler/icons-react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { LogoutButton } from '../../components/LogoutButton';
 import { VITE_API_BASE_URL } from '../../config/api';
 import { getAuthUser } from '../../utils/authSession';
 import classes from './StudentQuizScore.module.css';
@@ -116,13 +117,14 @@ export default function StudentQuizScore() {
           <nav className={classes.nav}>
             <Link to="/student/modules" className={classes.navLink}>Modules</Link>
             <a href="#ranking" className={classes.navLink}>Ranking</a>
-            <a href="#profile" className={classes.navLink}>My profile</a>
+            <Link to="/student/profile" className={classes.navLink}>My profile</Link>
           </nav>
         </div>
 
         <div className={classes.headerRight}>
           <IconSettings size={18} stroke={1.8} className={classes.headerIcon} />
           <IconBell size={18} stroke={1.8} className={classes.headerIcon} />
+          <LogoutButton />
           <div className={classes.avatar}>
             <IconUserCircle size={24} stroke={1.8} />
           </div>

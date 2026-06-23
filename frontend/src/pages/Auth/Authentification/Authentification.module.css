@@ -243,3 +243,51 @@
     padding: 0 1.5rem;
   }
 }
+
+@media (max-width: 34rem) {
+  .page {
+    width: 100%;
+  }
+
+  .header {
+    padding-top: 1.4rem;
+  }
+
+  .logo {
+    width: 7.5rem;
+  }
+
+  .cardWrapper {
+    padding: 1.4rem 0.75rem 1rem;
+  }
+
+  .card {
+    border-radius: 1.25rem;
+  }
+
+  .formPanelContent {
+    padding: 1.6rem 1rem 1.8rem;
+  }
+
+  .formTitle {
+    font-size: 2.25rem;
+  }
+
+  .formFields {
+    margin-top: 1.4rem;
+  }
+
+  .sidePanel,
+  .sidePanelRegister {
+    border-radius: 0 0 1.25rem 1.25rem;
+    padding: 1.6rem 0;
+  }
+
+  .welcomeTitle {
+    font-size: 1.85rem;
+  }
+
+  .switchButton {
+    min-height: 2.7rem;
+  }
+}

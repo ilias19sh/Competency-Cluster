@@ -259,3 +259,53 @@
     min-height: 7rem;
   }
 }
+
+@media (max-width: 34rem) {
+  .header {
+    flex-direction: column;
+  }
+
+  .headerLeft,
+  .headerRight {
+    width: 100%;
+  }
+
+  .headerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerRight {
+    justify-content: space-between;
+    gap: 0.65rem;
+  }
+
+  .nav {
+    justify-content: flex-start;
+  }
+
+  .quizShell {
+    width: calc(100% - 1.25rem);
+    margin-top: 1.5rem;
+  }
+
+  .questionTitle {
+    margin-bottom: 1.5rem;
+    font-size: 1.35rem;
+  }
+
+  .goodFeedback,
+  .badFeedback,
+  .scoreFeedback {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .actionRow {
+    justify-content: stretch;
+  }
+
+  .actionButton {
+    width: 100%;
+  }
+}

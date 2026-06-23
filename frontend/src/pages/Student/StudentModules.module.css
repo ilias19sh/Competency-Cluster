@@ -503,3 +503,43 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 34rem) {
+  .headerActions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .welcomeText {
+    font-size: 0.86rem;
+  }
+
+  .headingText {
+    font-size: 2rem;
+  }
+
+  .moduleCard {
+    padding: 1rem;
+  }
+
+  .moduleTitle,
+  .submoduleTitle {
+    font-size: 1.8rem;
+  }
+
+  .questionCount {
+    font-size: 1.05rem;
+  }
+
+  .filterDialog {
+    width: calc(100vw - 1rem);
+    padding: 1rem;
+  }
+
+  .filterActions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

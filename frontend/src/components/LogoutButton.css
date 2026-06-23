@@ -1,0 +1,33 @@
+.cc-logout-button {
+  min-width: 4.8rem;
+  min-height: 2rem;
+  border: 1px solid rgba(140, 82, 255, 0.42);
+  border-radius: 999px;
+  padding: 0 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #8c52ff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cc-logout-button:hover {
+  background: rgba(140, 82, 255, 0.08);
+}
+
+.cc-logout-button:focus-visible {
+  outline: 0.2rem solid rgba(140, 82, 255, 0.38);
+  outline-offset: 0.15rem;
+}
+
+@media (max-width: 34rem) {
+  .cc-logout-button {
+    min-width: 4.2rem;
+    min-height: 1.9rem;
+    padding: 0 0.7rem;
+    font-size: 0.72rem;
+  }
+}

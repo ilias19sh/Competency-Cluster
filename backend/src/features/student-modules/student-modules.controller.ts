@@ -12,6 +12,11 @@ export class StudentModulesController {
     return this.studentModulesService.getStudentModules(studentId);
   }
 
+  @Get('student/:studentId/profile')
+  getStudentProfile(@Param('studentId', ParseIntPipe) studentId: number) {
+    return this.studentModulesService.getStudentProfile(studentId);
+  }
+
   @Get('student/:studentId/submodule/:submoduleId/quiz')
   getSubmoduleQuiz(
     @Param('studentId', ParseIntPipe) studentId: number,
