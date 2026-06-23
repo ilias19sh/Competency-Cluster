@@ -13,6 +13,7 @@ import StudentModules from './pages/Student/StudentModules';
 import StudentSubmodules from './pages/Student/StudentSubmodules';
 import StudentQuiz from './pages/Student/StudentQuiz';
 import StudentQuizScore from './pages/Student/StudentQuizScore';
+import StudentProfile from './pages/Student/StudentProfile';
 import { getAuthUser } from './utils/authSession';
 import type { AuthRole } from './utils/authSession';
 
@@ -125,6 +126,14 @@ export default function App() {
             element={
               <ProtectedRoute allowedRoles={['student']}>
                 <StudentQuizScore />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/profile"
+            element={
+              <ProtectedRoute allowedRoles={['student']}>
+                <StudentProfile />
               </ProtectedRoute>
             }
           />

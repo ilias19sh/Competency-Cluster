@@ -3,6 +3,7 @@ import { TextInput } from '@mantine/core';
 import { IconBell, IconChevronRight, IconFilter, IconSearch, IconSettings } from '@tabler/icons-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CcButton, CcCircleProgress, CcText, CcTitle } from '../../components';
+import { LogoutButton } from '../../components/LogoutButton';
 import { VITE_API_BASE_URL } from '../../config/api';
 import { getAuthUser } from '../../utils/authSession';
 import classes from './StudentModules.module.css';
@@ -177,6 +178,7 @@ export default function StudentSubmodules() {
         <div className={classes.headerActions}>
           <IconSettings size={20} stroke={1.8} className={classes.headerIcon} />
           <IconBell size={20} stroke={1.8} className={classes.headerIcon} />
+          <LogoutButton />
         </div>
       </header>
 

@@ -381,3 +381,42 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 34rem) {
+  .headerActions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .welcomeText {
+    font-size: 0.86rem;
+  }
+
+  .headingText,
+  .editorTitle {
+    font-size: 1.8rem;
+  }
+
+  .backButton,
+  .addQuestionButton {
+    width: 100%;
+  }
+
+  .cardTitle {
+    font-size: 1.8rem;
+  }
+
+  .questionCount {
+    font-size: 1.1rem;
+  }
+
+  .questionsPanel {
+    padding: 0.85rem;
+  }
+
+  .answerRowCorrect {
+    border-radius: 0.9rem;
+  }
+}

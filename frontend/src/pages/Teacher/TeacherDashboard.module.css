@@ -880,3 +880,68 @@
     padding: 0.7rem;
   }
 }
+
+@media (max-width: 34rem) {
+  .headerActions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .welcomeText {
+    font-size: 0.86rem;
+  }
+
+  .headingText,
+  .modulesHeadingText,
+  .createSubmoduleTitle {
+    font-size: 1.8rem;
+  }
+
+  .actionsWrapper {
+    align-self: stretch;
+  }
+
+  .actionsButton {
+    width: 100%;
+  }
+
+  .createModuleSection,
+  .createSubmoduleSection,
+  .questionsPanel {
+    padding: 0.85rem;
+  }
+
+  .moduleTextarea {
+    min-height: 10rem;
+  }
+
+  .moduleTitle {
+    font-size: 1.85rem;
+  }
+
+  .moduleSubmodules {
+    font-size: 1rem;
+  }
+
+  .filterDialog {
+    width: calc(100vw - 1rem);
+    padding: 1rem;
+  }
+
+  .filterActions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .answerRowCorrect {
+    border-radius: 0.9rem;
+  }
+
+  .publishButton,
+  .createButton,
+  .addQuestionButton {
+    width: 100%;
+  }
+}

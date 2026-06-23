@@ -277,3 +277,50 @@
     padding: 1rem;
   }
 }
+
+@media (max-width: 34rem) {
+  .header {
+    flex-direction: column;
+  }
+
+  .headerLeft,
+  .headerRight {
+    width: 100%;
+  }
+
+  .headerLeft {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerRight {
+    justify-content: space-between;
+    gap: 0.65rem;
+  }
+
+  .hero {
+    padding: 4.7rem 1rem 2rem;
+  }
+
+  .homeButton {
+    right: 1rem;
+  }
+
+  .scoreCircle {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .rankMessage {
+    font-size: 1.25rem;
+  }
+
+  .otherTitle {
+    font-size: 1.45rem;
+  }
+
+  .submoduleRail {
+    grid-auto-columns: minmax(12rem, 82vw);
+    gap: 1rem;
+  }
+}
