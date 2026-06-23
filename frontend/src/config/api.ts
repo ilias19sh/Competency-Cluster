@@ -5,5 +5,4 @@ const defaultApiUrl =
     ? productionApiUrl
     : localApiUrl;
 
-
 export const VITE_API_BASE_URL = defaultApiUrl.replace(/\/$/, '');

@@ -215,6 +215,7 @@
   padding: 0.5rem;
   background: linear-gradient(135deg, rgba(226, 211, 255, 0.95) 0%, rgba(255, 228, 212, 0.95) 100%);
   border: 1px solid rgba(255, 233, 220, 0.95);
+  cursor: pointer;
 }
 
 .submoduleCardHeader {
@@ -253,6 +254,11 @@
 .submoduleCardFooter {
   padding: 0.45rem 0.35rem 0.2rem;
   text-align: center;
+}
+
+.submoduleCard:focus-visible {
+  outline: 0.25rem solid rgba(140, 82, 255, 0.45);
+  outline-offset: 0.25rem;
 }
 
 .submoduleDescription {

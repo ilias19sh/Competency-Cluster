@@ -236,7 +236,18 @@ export default function StudentSubmodules() {
 
               <div className={classes.submoduleGrid}>
                 {filteredSubmodules.map((submodule) => (
-                  <article key={submodule.id} className={classes.submoduleCard}>
+                  <article
+                    key={submodule.id}
+                    className={classes.submoduleCard}
+                    onClick={() => navigate(`/student/submodules/${submodule.id}/quiz`)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        navigate(`/student/submodules/${submodule.id}/quiz`);
+                      }
+                    }}
+                  >
                     <div className={classes.submoduleCardHeader}>
                       <h3 className={classes.submoduleTitle}>{submodule.title}</h3>
                     </div>

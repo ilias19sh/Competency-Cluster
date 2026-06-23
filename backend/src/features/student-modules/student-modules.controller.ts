@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe} from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post} from '@nestjs/common';
 import { StudentModulesService } from './student-modules.service';
 
 
@@ -11,5 +11,28 @@ export class StudentModulesController {
   getStudentModules(@Param('studentId', ParseIntPipe) studentId: number) {
     return this.studentModulesService.getStudentModules(studentId);
   }
-}
 
+  @Get('student/:studentId/submodule/:submoduleId/quiz')
+  getSubmoduleQuiz(
+    @Param('studentId', ParseIntPipe) studentId: number,
+    @Param('submoduleId', ParseIntPipe) submoduleId: number,
+  ) {
+    return this.studentModulesService.getSubmoduleQuiz(studentId, submoduleId);
+  }
+
+  @Post('student/:studentId/submodule/:submoduleId/submit')
+  submitSubmoduleQuiz(
+    @Param('studentId', ParseIntPipe) studentId: number,
+    @Param('submoduleId', ParseIntPipe) submoduleId: number,
+    @Body()
+    body: {
+      answers: Array<{
+        questionId: number;
+        answerId?: number;
+        answerIds?: number[];
+      }>;
+    },
+  ) {
+    return this.studentModulesService.submitSubmoduleQuiz(studentId, submoduleId, body.answers ?? []);
+  }
+}
